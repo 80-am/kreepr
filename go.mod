@@ -9,6 +9,7 @@ require (
 	github.com/dustin/go-jsonpointer v0.0.0-20160814072949-ba0abeacc3dc // indirect
 	github.com/dustin/gojson v0.0.0-20160307161227-2e71ec9dd5ad // indirect
 	github.com/garyburd/go-oauth v0.0.0-20180319155456-bca2e7f09a17 // indirect
+	github.com/go-sql-driver/mysql v1.5.0
 	golang.org/x/net v0.0.0-20200904194848-62affa334b73 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 )

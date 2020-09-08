@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"../db"
 
+	"github.com/80-am/kreepr/db"
 	"github.com/ChimeraCoder/anaconda"
 )
 
