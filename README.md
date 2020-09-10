@@ -1,8 +1,9 @@
 # kreepr
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/80-am/kreepr)
+[![Build Status](https://travis-ci.com/80-am/kreepr.svg?branch=master&status=started)](https://travis-ci.com/80-am/kreepr)
+[![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/80-am/kreepr)](https://golang.org/)
 [![License: GPL-3.0](https://img.shields.io/github/license/80-am/kreepr)](https://opensource.org/licenses/GPL-3.0)
 
-Creeping social media for changes in trends and behavior.
+Kreeping social media for changes in trends and behavior.
 
 ## Getting Started
 Thsese instructions will get you up and running on your local machine.
