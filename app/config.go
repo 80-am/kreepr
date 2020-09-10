@@ -7,7 +7,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type conf struct {
+// Config to use
+type Config struct {
 	DbUser		 string `yaml:"user"`
 	DbPassword	 string `yaml:"password"`
 	DbSchema	 string `yaml:"schema"`
@@ -18,7 +19,8 @@ type conf struct {
 	AccessSecret string `yaml:"access_secret"`
 }
 
-func (c *conf) getConf() *conf {
+// GetConfig of user
+func (c *Config) GetConfig() *Config {
 	yamlFile, err := ioutil.ReadFile("../secrets.yml")
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
