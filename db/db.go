@@ -34,3 +34,12 @@ func Query(query string) *sql.Rows {
 	}
 	return rows
 }
+
+// Prepare query to be executed
+func Prepare(query string) *sql.Stmt {
+	stmt, err := database.Prepare(query)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return stmt
+}

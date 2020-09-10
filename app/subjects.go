@@ -21,7 +21,7 @@ type Subject struct {
 
 // GetSubjects to kreep
 func (s *Subject) GetSubjects() string {
-	rows := db.Query("select userName from subjects")
+	rows := db.Query("SELECT userName FROM subjects;")
 	var subjects strings.Builder
 
 	for rows.Next() {
@@ -33,4 +33,11 @@ func (s *Subject) GetSubjects() string {
 	}
 
 	return subjects.String()
+}
+
+// UpdateSubject data
+func (s *Subject) UpdateSubject(su Subject) {
+	stmt := db.Prepare("UPDATE subjects SET userId = (?), name = (?), followers = (?), friends = (?)," + 
+	"tweets = (?), location = (?) WHERE userName = (?);")
+	stmt.Exec(su.UserID, su.Name, su.Followers, su.Friends, su.Tweets, su.Location, su.UserName)
 }
