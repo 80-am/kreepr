@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/url"
 
@@ -11,6 +12,12 @@ import (
 var api *anaconda.TwitterApi
 var c Config
 var subject Subject
+var addSub string
+
+func init() {
+	flag.StringVar(&addSub, "addSubject", "", "Add new subject")
+	flag.Parse()
+}
 
 func getSubjectData(api *anaconda.TwitterApi) {
 	s := subject.GetSubjects()
@@ -32,6 +39,24 @@ func getSubjectData(api *anaconda.TwitterApi) {
 	}
 }
 
+func isFlagPassed(name string) bool {
+    found := false
+    flag.Visit(func(f *flag.Flag) {
+        if f.Name == name {
+            found = true
+        }
+	})
+    return found
+}
+
+func isEmptySubjectDb() bool {
+	s := subject.GetSubjects()
+	if s != "" {
+		return false
+	}
+	return true
+}
+
 func main() {
 	c.GetConfig()
 	api := anaconda.NewTwitterApiWithCredentials(c.AccessToken, c.AccessSecret, c.Key, c.Secret)
@@ -41,5 +66,12 @@ func main() {
 	}
 	defer database.Close()
 
+	if isEmptySubjectDb() && !isFlagPassed("addSubject") {
+		fmt.Print("Add a subject to kreep: ")
+		fmt.Scan(&addSub) 
+		subject.AddSubject(addSub)
+	} else if isFlagPassed("addSubject") {
+		subject.AddSubject(addSub)
+	}
 	getSubjectData(api)
 }

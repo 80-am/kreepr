@@ -18,6 +18,13 @@ type Subject struct {
 	Location  string
 }
 
+// AddSubject to insert into followers table
+func (s *Subject) AddSubject(new string) {
+	if !s.isNewSubject(new) {
+		stmt := db.Prepare("INSERT INTO subjects(userName) VALUES(?)")
+		stmt.Exec(new)
+	}
+}
 
 // GetSubjects to kreep
 func (s *Subject) GetSubjects() string {
@@ -31,8 +38,25 @@ func (s *Subject) GetSubjects() string {
 		}
 		subjects.WriteString(userName + ", ")
 	}
-
 	return subjects.String()
+}
+
+func (s *Subject)isNewSubject(userName string) bool {
+	stmt := db.Prepare("SELECT userName FROM subjects where userName = (?);")
+	rows, _ := stmt.Query(userName)
+	cols, _ := rows.Columns()
+	rawResult := make([][]byte, len(cols))
+    dest := make([]interface{}, len(cols))
+    for i := range rawResult {
+        dest[i] = &rawResult[i]
+    }
+    for rows.Next() {
+		if rawResult != nil {
+			return true
+		}
+		return false
+	}
+	return false
 }
 
 // UpdateSubject data

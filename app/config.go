@@ -29,6 +29,5 @@ func (c *Config) GetConfig() *Config {
 	if err != nil {
 		log.Fatalf("Unmarshal: %v", err)
 	}
-
 	return c
 }

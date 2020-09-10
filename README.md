@@ -16,12 +16,6 @@ Import db.sql using mysql or a db visualization program.
 mysql -u username -p password kreepr < ./db.sql
 ```
 
-Set up your subject to kreep by inserting their Twitter username into the subjects table. 
-
-```sql
-INSERT into subjects(userName) VALUES('LisaSu');
-```
-
 Copy [secrets.yml.sample](secrets.yml.sample) into secrets.yml and fill in your secrets.
 
 ```yml

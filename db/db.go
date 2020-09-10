@@ -16,7 +16,6 @@ func Init(user string, pass string, schema string) (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	err = dbLink.Ping()
 	if err != nil {
 		return nil, err
