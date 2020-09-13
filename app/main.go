@@ -45,9 +45,9 @@ func getSubjectsTweets(api *anaconda.TwitterApi, s Subject) {
 	lastID := tweet.GetLastTweetID(s)
 	var q string
 	if lastID != "" {
-		q = "screen_name=" + s.UserName + ";count=10;exclude_replies=true;since_id=" + lastID
+		q = "screen_name=" + s.UserName + ";count=200;exclude_replies=false;since_id=" + lastID
 	} else {
-		q = "screen_name=" + s.UserName + ";count=10;exclude_replies=true;"
+		q = "screen_name=" + s.UserName + ";count=200;exclude_replies=false;"
 	}
 	v, err := url.ParseQuery(q)
 	if err != nil {
