@@ -12,6 +12,7 @@ import (
 var api *anaconda.TwitterApi
 var c Config
 var subject Subject
+var tweet Tweet
 var addSub string
 
 func init() {
@@ -36,6 +37,31 @@ func getSubjectData(api *anaconda.TwitterApi) {
 		t[i].Tweets = u.StatusesCount
 		t[i].Location = u.Location
 		subject.UpdateSubject(t[i])
+		getSubjectsTweets(api, t[i])
+	}
+}
+
+func getSubjectsTweets(api *anaconda.TwitterApi, s Subject) {
+	lastID := tweet.GetLastTweetID(s)
+	var q string
+	if lastID != "" {
+		q = "screen_name=" + s.UserName + ";count=10;exclude_replies=true;since_id=" + lastID
+	} else {
+		q = "screen_name=" + s.UserName + ";count=10;exclude_replies=true;"
+	}
+	v, err := url.ParseQuery(q)
+	if err != nil {
+		fmt.Print(err)
+	}
+	tweets, _ := api.GetUserTimeline(v)
+	for i := range tweets {
+		tweet.ID = tweets[i].Id
+		tweet.Text = tweets[i].Text
+		tweet.Created = tweets[i].CreatedAt
+		tweet.Likes = tweets[i].FavoriteCount
+		tweet.ReTweets = tweets[i].RetweetCount
+		tweet.ReplyTo = tweets[i].InReplyToScreenName
+		tweet.UpdateTweets(s, tweet)
 	}
 }
 

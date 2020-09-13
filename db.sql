@@ -13,3 +13,19 @@ CREATE TABLE `subjects` (
   PRIMARY KEY (`id`),
   KEY `UserId` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+# Dump of table `tweets`
+# ------------------------------------------------------------
+
+CREATE TABLE `tweets` (
+  `id` bigint(20) NOT NULL,
+  `userId` bigint(20),
+  `userName` text,
+  `text` text,
+  `created` text,
+  `likes` int(11),
+  `reTweets` int(11),
+  `replyTo` text,
+  PRIMARY KEY (`id`),
+  KEY `UserId` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -34,6 +34,12 @@ func Query(query string) *sql.Rows {
 	return rows
 }
 
+// QueryRow to mysql
+func QueryRow (query string, args interface{}) *sql.Row {
+	row := database.QueryRow(query, args)
+	return row
+}
+
 // Prepare query to be executed
 func Prepare(query string) *sql.Stmt {
 	stmt, err := database.Prepare(query)

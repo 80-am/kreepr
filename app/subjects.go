@@ -41,6 +41,13 @@ func (s *Subject) GetSubjects() string {
 	return subjects.String()
 }
 
+// UpdateSubject data
+func (s *Subject) UpdateSubject(su Subject) {
+	stmt := db.Prepare("UPDATE subjects SET userId = (?), name = (?), followers = (?), friends = (?)," +
+	"tweets = (?), location = (?) WHERE userName = (?);")
+	stmt.Exec(su.UserID, su.Name, su.Followers, su.Friends, su.Tweets, su.Location, su.UserName)
+}
+
 func (s *Subject)isNewSubject(userName string) bool {
 	stmt := db.Prepare("SELECT userName FROM subjects where userName = (?);")
 	rows, _ := stmt.Query(userName)
@@ -57,11 +64,4 @@ func (s *Subject)isNewSubject(userName string) bool {
 		return false
 	}
 	return false
-}
-
-// UpdateSubject data
-func (s *Subject) UpdateSubject(su Subject) {
-	stmt := db.Prepare("UPDATE subjects SET userId = (?), name = (?), followers = (?), friends = (?)," + 
-	"tweets = (?), location = (?) WHERE userName = (?);")
-	stmt.Exec(su.UserID, su.Name, su.Followers, su.Friends, su.Tweets, su.Location, su.UserName)
 }
