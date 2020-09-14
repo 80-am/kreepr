@@ -1,3 +1,4 @@
 secrets.yml
 *.swp
 .DS_Store
+app/app

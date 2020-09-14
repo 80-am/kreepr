@@ -30,3 +30,18 @@ CREATE TABLE `tweets` (
   PRIMARY KEY (`id`),
   KEY `UserId` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+# Dump of table `history`
+# ------------------------------------------------------------
+
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` text,
+  `userId` bigint(20),
+  `userName` text,
+  `followers` int(11),
+  `friends` int(11),
+  `tweets` bigint(20),
+  PRIMARY KEY (`id`),
+  KEY `UserId` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

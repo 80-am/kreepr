@@ -6,13 +6,13 @@
 Kreeping social media for changes in trends and behavior.
 
 ## Getting Started
-Thsese instructions will get you up and running on your local machine.
+These instructions will get you up and running on your local machine.
 
 ```sql
 CREATE DATABASE kreepr;
 ```
 
-Import db.sql using mysql or a db visualization program.
+Import [db.sql](db.sql) using mysql or a db visualization program.
 ```bash
 mysql -u username -p password kreepr < ./db.sql
 ```
@@ -31,4 +31,20 @@ secret: "your twitter secret"
 token: "your twitter token"
 access_token: "your twitter access token"
 access_secret: "your twitter access secret
+```
+
+### Subjects
+Use `-add` argument to start kreeping someone.
+```bash
+add="twitterUserName"
+```
+Similar you can `-drop` your subject.
+```bash
+drop="twitterUserName"
+```
+
+### Daily Job
+You can use crontab to update the history of your subjects.
+```bash
+0 0 * * * go run /PATH_TO_BUILT_APP/app
 ```

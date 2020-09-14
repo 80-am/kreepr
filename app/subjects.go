@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"strings"
+	"time"
 
 	"github.com/80-am/kreepr/db"
 )
@@ -27,6 +28,12 @@ func (s *Subject) AddSubject(new string) {
 	}
 }
 
+// DropSubject drops all history and stops kreeping subject
+func (s *Subject) DropSubject(user string) {
+	stmt := db.Prepare("DELETE s, h, t from subjects s INNER JOIN history h ON s.userId = h.userId INNER JOIN tweets t ON s.userId = t.userId WHERE s.userName = (?)")
+	stmt.Exec(user)
+}
+
 // GetSubjects to kreep
 func (s *Subject) GetSubjects() string {
 	rows := db.Query("SELECT userName FROM subjects;")
@@ -42,11 +49,26 @@ func (s *Subject) GetSubjects() string {
 	return subjects.String()
 }
 
+// UpdateHistory with cron once per day to keep the history
+func updateHistory(su Subject) {
+	today := time.Now().UTC().Format("2006-01-02")
+	r := db.QueryRow("SELECT date FROM history WHERE date = '" + today + "' AND userName = (?);", su.UserName)
+	var date string
+	r.Scan(&date)
+	if date == "" {
+		stmt := db.Prepare("INSERT INTO history(date, userId, userName, followers, friends, tweets) VALUES(?, ?, ?, ?, ?, ?);")
+		stmt.Exec(today, su.UserID, su.UserName, su.Followers, su.Friends, su.Tweets)
+	}
+}
+
 // UpdateSubject data
-func (s *Subject) UpdateSubject(su Subject) {
+func (s *Subject) UpdateSubject(su Subject, dailyJob bool) {
 	stmt := db.Prepare("UPDATE subjects SET userId = (?), name = (?), followers = (?), friends = (?)," +
 	"tweets = (?), joinDate = (?), location = (?) WHERE userName = (?);")
 	stmt.Exec(su.UserID, su.Name, su.Followers, su.Friends, su.Tweets, su.JoinDate, su.Location, su.UserName)
+	if (dailyJob) {
+		updateHistory(su)
+	}
 }
 
 func (s *Subject)isNewSubject(userName string) bool {

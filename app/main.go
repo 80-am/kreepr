@@ -13,14 +13,18 @@ var api *anaconda.TwitterApi
 var c Config
 var subject Subject
 var tweet Tweet
-var addSub string
+var add string
+var drop string
+var cron bool
 
 func init() {
-	flag.StringVar(&addSub, "addSubject", "", "Add new subject")
+	flag.StringVar(&add, "add", "", "Add new subject")
+	flag.StringVar(&drop, "drop", "", "Drop subject")
+	flag.BoolVar(&cron, "cron", false, "Daily job to update history")
 	flag.Parse()
 }
 
-func getSubjectData(api *anaconda.TwitterApi) {
+func getSubjectData(api *anaconda.TwitterApi, dailyJob bool) {
 	s := subject.GetSubjects()
 	users, err := api.GetUsersLookup(s, url.Values{})
 	if err != nil {
@@ -37,7 +41,7 @@ func getSubjectData(api *anaconda.TwitterApi) {
 		t[i].Tweets = u.StatusesCount
 		t[i].JoinDate = u.CreatedAt
 		t[i].Location = u.Location
-		subject.UpdateSubject(t[i])
+		subject.UpdateSubject(t[i], dailyJob)
 		getSubjectsTweets(api, t[i])
 	}
 }
@@ -93,12 +97,18 @@ func main() {
 	}
 	defer database.Close()
 
-	if isEmptySubjectDb() && !isFlagPassed("addSubject") {
+	dailyJob := isFlagPassed("cron")
+	if isEmptySubjectDb() && !isFlagPassed("add") {
 		fmt.Print("Add a subject to kreep: ")
-		fmt.Scan(&addSub) 
-		subject.AddSubject(addSub)
-	} else if isFlagPassed("addSubject") {
-		subject.AddSubject(addSub)
+		fmt.Scan(&add) 
+		subject.AddSubject(add)
+		dailyJob = true
+	} else if isFlagPassed("add") {
+		subject.AddSubject(add)
+		dailyJob = true
 	}
-	getSubjectData(api)
+	if isFlagPassed("drop") {
+		subject.DropSubject(drop)
+	}
+	getSubjectData(api, dailyJob)
 }
