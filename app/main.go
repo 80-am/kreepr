@@ -35,6 +35,7 @@ func getSubjectData(api *anaconda.TwitterApi) {
 		t[i].Followers = u.FollowersCount
 		t[i].Friends = u.FriendsCount
 		t[i].Tweets = u.StatusesCount
+		t[i].JoinDate = u.CreatedAt
 		t[i].Location = u.Location
 		subject.UpdateSubject(t[i])
 		getSubjectsTweets(api, t[i])

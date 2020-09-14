@@ -9,6 +9,7 @@ CREATE TABLE `subjects` (
   `followers` int(11),
   `friends` int(11),
   `tweets` bigint(20),
+  `joinDate` text,
   `location` text,
   PRIMARY KEY (`id`),
   KEY `UserId` (`userId`)

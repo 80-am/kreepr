@@ -15,6 +15,7 @@ type Subject struct {
 	Followers int
 	Friends   int
 	Tweets    int64
+	JoinDate  string
 	Location  string
 }
 
@@ -44,8 +45,8 @@ func (s *Subject) GetSubjects() string {
 // UpdateSubject data
 func (s *Subject) UpdateSubject(su Subject) {
 	stmt := db.Prepare("UPDATE subjects SET userId = (?), name = (?), followers = (?), friends = (?)," +
-	"tweets = (?), location = (?) WHERE userName = (?);")
-	stmt.Exec(su.UserID, su.Name, su.Followers, su.Friends, su.Tweets, su.Location, su.UserName)
+	"tweets = (?), joinDate = (?), location = (?) WHERE userName = (?);")
+	stmt.Exec(su.UserID, su.Name, su.Followers, su.Friends, su.Tweets, su.JoinDate, su.Location, su.UserName)
 }
 
 func (s *Subject)isNewSubject(userName string) bool {
