@@ -98,7 +98,7 @@ func main() {
 	defer database.Close()
 
 	dailyJob := isFlagPassed("cron")
-	if isEmptySubjectDb() && !isFlagPassed("add") {
+	if isEmptySubjectDb() && !isFlagPassed("add") && !isFlagPassed("drop") {
 		fmt.Print("Add a subject to kreep: ")
 		fmt.Scan(&add) 
 		subject.AddSubject(add)
