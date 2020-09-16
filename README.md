@@ -42,5 +42,5 @@ drop="twitterUserName"
 ### Daily Job
 You can use crontab to update the history of your subjects.
 ```bash
-0 0 * * * go run /PATH_TO_BUILT_APP/cmd -cron=true
+0 2 * * * go run /PATH_TO_BUILT_APP/cmd -cron=true -secrets=/PATH/TO/YOUR/SECRETS/secrets.yml
 ```

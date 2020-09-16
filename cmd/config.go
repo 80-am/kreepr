@@ -20,10 +20,13 @@ type Config struct {
 }
 
 // GetConfig of user
-func (c *Config) GetConfig() *Config {
-	yamlFile, err := ioutil.ReadFile("secrets.yml")
+func (c *Config) GetConfig(secrets string) *Config {
+	if secrets == "" {
+		secrets = "secrets.yml"
+	}
+	yamlFile, err := ioutil.ReadFile(secrets)
 	if err != nil {
-		log.Printf("yamlFile.Get err   #%v ", err)
+		log.Printf("Error in %v ", err)
 	}
 	err = yaml.Unmarshal(yamlFile, c)
 	if err != nil {

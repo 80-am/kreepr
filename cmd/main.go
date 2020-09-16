@@ -16,11 +16,13 @@ var tweet Tweet
 var add string
 var drop string
 var cron bool
+var secrets string
 
 func init() {
 	flag.StringVar(&add, "add", "", "Add new subject")
 	flag.StringVar(&drop, "drop", "", "Drop subject")
 	flag.BoolVar(&cron, "cron", false, "Daily job to update history")
+	flag.StringVar(&secrets, "secrets", "", "Path to your secrets.yml")
 	flag.Parse()
 }
 
@@ -90,7 +92,7 @@ func isEmptySubjectDb() bool {
 
 // Main for kreepr app
 func Main() {
-	c.GetConfig()
+	c.GetConfig(secrets)
 	api := anaconda.NewTwitterApiWithCredentials(c.AccessToken, c.AccessSecret, c.Key, c.Secret)
 	database, err := db.Init(c.DbUser, c.DbPassword, c.DbSchema)
 	if err != nil {
