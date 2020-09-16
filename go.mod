@@ -1,6 +1,6 @@
 module github.com/80-am/kreepr
 
-go 1.14
+go 1.15
 
 require (
 	github.com/ChimeraCoder/anaconda v2.0.0+incompatible

@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"flag"
@@ -88,7 +88,8 @@ func isEmptySubjectDb() bool {
 	return true
 }
 
-func main() {
+// Main for kreepr app
+func Main() {
 	c.GetConfig()
 	api := anaconda.NewTwitterApiWithCredentials(c.AccessToken, c.AccessSecret, c.Key, c.Secret)
 	database, err := db.Init(c.DbUser, c.DbPassword, c.DbSchema)

@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"io/ioutil"
@@ -21,7 +21,7 @@ type Config struct {
 
 // GetConfig of user
 func (c *Config) GetConfig() *Config {
-	yamlFile, err := ioutil.ReadFile("../secrets.yml")
+	yamlFile, err := ioutil.ReadFile("secrets.yml")
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
 	}

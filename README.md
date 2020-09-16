@@ -10,11 +10,7 @@ These instructions will get you up and running on your local machine.
 
 ```sql
 CREATE DATABASE kreepr;
-```
-
-Import [db.sql](db.sql) using mysql or a db visualization program.
-```bash
-mysql -u username -p password kreepr < ./db.sql
+SOURCE db.sql;
 ```
 
 Copy [secrets.yml.sample](secrets.yml.sample) into secrets.yml and fill in your secrets.
@@ -46,5 +42,5 @@ drop="twitterUserName"
 ### Daily Job
 You can use crontab to update the history of your subjects.
 ```bash
-0 0 * * * go run /PATH_TO_BUILT_APP/app
+0 0 * * * go run /PATH_TO_BUILT_APP/cmd -cron=true
 ```
