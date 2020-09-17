@@ -72,6 +72,14 @@ func getSubjectsTweets(api *anaconda.TwitterApi, s Subject) {
 	}
 }
 
+func isEmptySubjectDb() bool {
+	s := subject.GetSubjects()
+	if s != "" {
+		return false
+	}
+	return true
+}
+
 func isFlagPassed(name string) bool {
     found := false
     flag.Visit(func(f *flag.Flag) {
@@ -80,14 +88,6 @@ func isFlagPassed(name string) bool {
         }
 	})
     return found
-}
-
-func isEmptySubjectDb() bool {
-	s := subject.GetSubjects()
-	if s != "" {
-		return false
-	}
-	return true
 }
 
 // Main for kreepr app
